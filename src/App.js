@@ -16,10 +16,19 @@ class App extends Component{
   }
   unsubcribeFromAuth = null
   componentDidMount(){
-    this.unsubcribeFromAuth = auth.onAuthStateChanged(async user=>{
-      // this.setState({currentUser:user})
-      // console.log(this.state.currentUser)
-      createUserProfileDocument(user)
+    this.unsubcribeFromAuth = auth.onAuthStateChanged(async userAuth=>{
+      if(userAuth){
+        const userRef = await createUserProfileDocument(userAuth)
+        userRef.onSnapshot(snapShop => {
+         this.setState({
+           currentUser:{
+             id:snapShop.id,
+             ...snapShop.data()
+           }
+         })  
+        })
+      }
+      this.setState({currentUser:userAuth})
     })
   }
   componentWillUnmount(){
