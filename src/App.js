@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import {setCurrentUser} from './redux/user/user.action'
 
 class App extends Component{
+  constructor(props){
+    super()
+  }
   unsubcribeFromAuth = null
   componentDidMount(){
     const {setCurrentUser} = this.props
